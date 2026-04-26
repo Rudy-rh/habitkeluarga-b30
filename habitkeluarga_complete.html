@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HABITKELUARGA B30 — Jalan Ninja Keluargaku</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f5f5f0; padding: 20px; }
+  h1 { text-align:center; color: #7F77DD; font-size: 22px; margin-bottom: 6px; }
+  .subtitle { text-align:center; color: #888; font-size: 13px; margin-bottom: 24px; }
+  .nav { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:24px; }
+  .nav-btn { padding:8px 16px; border-radius:20px; border:1.5px solid #7F77DD; background:#fff; color:#7F77DD; font-size:12px; font-weight:500; cursor:pointer; font-family:inherit; transition:all 0.2s; }
+  .nav-btn.active, .nav-btn:hover { background:#7F77DD; color:#fff; }
+  .section { display:none; }
+  .section.active { display:block; }
+  .phone-wrap { display:flex; justify-content:center; }
+  iframe { width:360px; height:720px; border:none; border-radius:32px; box-shadow:0 8px 32px rgba(0,0,0,0.15); }
+  .info { text-align:center; margin-top:12px; font-size:12px; color:#888; }
+  .badge { display:inline-block; background:#EEEDFE; color:#3C3489; padding:2px 10px; border-radius:20px; font-size:11px; font-weight:500; margin:2px; }
+</style>
+</head>
+<body>
+
+<h1>🏠 HABITKELUARGA B30</h1>
+<p class="subtitle">Jalan Ninja Keluargaku — Interactive Prototype</p>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="show('onboarding')">1. Onboarding</button>
+  <button class="nav-btn" onclick="show('owner')">2. Owner Dashboard</button>
+  <button class="nav-btn" onclick="show('member')">3. Member View</button>
+  <button class="nav-btn" onclick="show('panel')">4. Owner Panel</button>
+  <button class="nav-btn" onclick="show('members')">5. Manage Members</button>
+  <button class="nav-btn" onclick="show('premium')">6. Premium & QRIS</button>
+  <button class="nav-btn" onclick="show('milestone')">7. Milestone Animations</button>
+  <button class="nav-btn" onclick="show('report')">8. Monthly Report</button>
+  <button class="nav-btn" onclick="show('ai')">9. AI Insights</button>
+</div>
+
+<div id="onboarding" class="section active">
+  <div class="phone-wrap">
+    <iframe srcdoc="
+<!DOCTYPE html><html><head><meta charset='UTF-8'><style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,sans-serif;background:#EEEDFE;width:360px;min-height:700px;border-radius:32px;overflow:hidden;}
+.sbar{background:#7F77DD;padding:10px 20px 6px;display:flex;justify-content:space-between;color:#fff;font-size:11px;}
+.ob{background:#7F77DD;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 24px;min-height:660px;}
+.brand{font-size:11px;color:rgba(255,255,255,0.7);letter-spacing:1.2px;font-weight:500;margin-bottom:6px;}
+.illus{width:150px;height:150px;background:rgba(255,255,255,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:68px;margin-bottom:24px;}
+.title{font-size:21px;font-weight:500;color:#fff;text-align:center;line-height:1.3;margin-bottom:8px;}
+.sub{font-size:13px;color:rgba(255,255,255,0.75);text-align:center;line-height:1.6;margin-bottom:28px;}
+.btn-w{width:100%;padding:13px;border-radius:15px;background:#fff;color:#3C3489;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:inherit;margin-bottom:9px;}
+.btn-ow{width:100%;padding:12px;border-radius:15px;background:transparent;color:#fff;font-size:13px;border:1.5px solid rgba(255,255,255,0.45);cursor:pointer;font-family:inherit;}
+</style></head><body>
+<div class='sbar'><span>9:41</span><span>WiFi 100%</span></div>
+<div class='ob'>
+  <p class='brand'>HABITKELUARGA B30</p>
+  <div class='illus'>🏠</div>
+  <h1 class='title'>Jalan Ninja Keluargaku</h1>
+  <p class='sub'>Build the best habits together as a family — 30 hari penuh challenge, rewards, dan kebersamaan.</p>
+  <button class='btn-w'>Mulai sebagai Owner (Orang Tua)</button>
+  <button class='btn-ow'>I'm a Family Member</button>
+</div>
+</body></html>
+"></iframe>
+  </div>
+  <p class="info">Halaman pertama yang dilihat saat buka app · <span class="badge">Fitur 1</span></p>
+</div>
+
+<div id="owner" class="section">
+  <div class="phone-wrap">
+    <iframe srcdoc="
+<!DOCTYPE html><html><head><meta charset='UTF-8'><style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,sans-serif;background:#f5f5f0;width:360px;min-height:700px;}
+.sbar{background:#7F77DD;padding:10px 20px 6px;display:flex;justify-content:space-between;color:#fff;font-size:11px;}
+.hdr{background:#7F77DD;padding:0 20px 16px;color:#fff;}
+.brand{font-size:11px;opacity:0.7;letter-spacing:1px;margin-bottom:3px;}
+.htitle{font-size:20px;font-weight:500;}
+.hsub{font-size:12px;opacity:0.75;margin-top:2px;}
+.scroll{padding:14px;display:flex;flex-direction:column;gap:11px;}
+.pts{background:#7F77DD;border-radius:16px;padding:15px;color:#fff;display:flex;align-items:center;gap:12px;}
+.pc{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;}
+.pn{font-size:20px;font-weight:500;line-height:1;}
+.pl{font-size:9px;opacity:0.8;}
+.card{background:#fff;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:13px 15px;}
+.clabel{font-size:11px;font-weight:500;color:#888;letter-spacing:0.7px;text-transform:uppercase;margin-bottom:9px;}
+.stats{display:flex;gap:6px;}
+.sb{flex:1;background:#f5f5f0;border-radius:10px;padding:9px 8px;text-align:center;}
+.sn{font-size:20px;font-weight:500;color:#7F77DD;}
+.sl{font-size:10px;color:#888;margin-top:2px;}
+.hr{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid rgba(0,0,0,0.06);cursor:pointer;}
+.hr:last-child{border-bottom:none;}
+.chk{width:25px;height:25px;border-radius:50%;border:2px solid rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.chk.done{background:#1D9E75;border-color:#1D9E75;}
+.chk.done::after{content:'';width:7px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translateY(-1px);display:block;}
+.hn{font-size:13px;color:#222;flex:1;}
+.ht{font-size:11px;color:#888;margin-top:1px;}
+.hp{font-size:11px;font-weight:500;color:#7F77DD;background:#EEEDFE;padding:2px 8px;border-radius:20px;}
+.bnav{background:#fff;border-top:0.5px solid rgba(0,0,0,0.08);display:flex;padding:7px 0 10px;}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;}
+.nic{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.nic.on{background:#EEEDFE;}
+.nlb{font-size:10px;color:#888;}
+.nlb.on{color:#7F77DD;font-weight:500;}
+</style></head><body>
+<div class='sbar'><span>9:41</span><span>WiFi 100%</span></div>
+<div class='hdr'><p class='brand'>HABITKELUARGA B30</p><p class='htitle'>Good morning, Ayah 👋</p><p class='hsub'>Day 12 of 30 — keep up the streak!</p></div>
+<div class='scroll'>
+<div class='pts'><div class='pc'><span class='pn'>847</span><span class='pl'>POIN</span></div><div><p style='font-size:15px;font-weight:500'>Total Family Points</p><p style='font-size:12px;opacity:0.8'>+35 poin hari ini · 3 habit done</p></div></div>
+<div class='card'><p class='clabel'>Streak &amp; Stats</p><div class='stats'><div class='sb'><p class='sn'>12</p><p class='sl'>Day streak</p></div><div class='sb'><p class='sn'>87%</p><p class='sl'>This week</p></div><div class='sb'><p class='sn'>4/4</p><p class='sl'>Anggota aktif</p></div></div></div>
+<div class='card'><p class='clabel'>Habit Tracker — Hari Ini</p>
+<div class='hr'><div class='chk done'></div><div><p class='hn'>Sholat Subuh</p><p class='ht'>Before 06.00 · wajib</p></div><span class='hp'>+10</span></div>
+<div class='hr'><div class='chk done'></div><div><p class='hn'>Baca Qur&apos;an — 3 ayat</p><p class='ht'>Morning · pagi hari</p></div><span class='hp'>+10</span></div>
+<div class='hr'><div class='chk done'></div><div><p class='hn'>Sarapan sehat</p><p class='ht'>Susu &amp; telur · 07.00–08.00</p></div><span class='hp'>+5</span></div>
+<div class='hr'><div class='chk'></div><div><p class='hn'>Sholat Dzuhur</p><p class='ht'>12.00–13.00 · don&apos;t skip!</p></div><span class='hp'>+10</span></div>
+<div class='hr'><div class='chk'></div><div><p class='hn'>Study time — belajar</p><p class='ht'>19.00–20.00 · focus mode</p></div><span class='hp'>+15</span></div>
+</div>
+<div class='card'><p class='clabel'>Family Progress</p>
+<div style='display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:0.5px solid rgba(0,0,0,0.06)'><div style='width:33px;height:33px;border-radius:50%;background:#E1F5EE;color:#085041;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500'>IB</div><p style='flex:1;font-size:13px;font-weight:500'>Ibu</p><div style='width:55px;height:5px;background:#f0f0f0;border-radius:5px;overflow:hidden'><div style='width:92%;height:100%;background:#1D9E75;border-radius:5px'></div></div><p style='font-size:12px;color:#888'>92%</p></div>
+<div style='display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:0.5px solid rgba(0,0,0,0.06)'><div style='width:33px;height:33px;border-radius:50%;background:#EEEDFE;color:#3C3489;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500'>AY</div><p style='flex:1;font-size:13px;font-weight:500'>Ayah</p><div style='width:55px;height:5px;background:#f0f0f0;border-radius:5px;overflow:hidden'><div style='width:87%;height:100%;background:#7F77DD;border-radius:5px'></div></div><p style='font-size:12px;color:#888'>87%</p></div>
+<div style='display:flex;align-items:center;gap:9px;padding:7px 0'><div style='width:33px;height:33px;border-radius:50%;background:#FAEEDA;color:#633806;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500'>AF</div><p style='flex:1;font-size:13px;font-weight:500'>Afkar</p><div style='width:55px;height:5px;background:#f0f0f0;border-radius:5px;overflow:hidden'><div style='width:74%;height:100%;background:#BA7517;border-radius:5px'></div></div><p style='font-size:12px;color:#888'>74%</p></div>
+</div>
+</div>
+<div class='bnav'>
+<div class='ni'><div class='nic on'>⊞</div><span class='nlb on'>Home</span></div>
+<div class='ni'><div class='nic'>★</div><span class='nlb'>Rewards</span></div>
+<div class='ni'><div class='nic'>⊕</div><span class='nlb'>Anggota</span></div>
+<div class='ni'><div class='nic'>◎</div><span class='nlb'>Profil</span></div>
+</div>
+</body></html>
+"></iframe>
+  </div>
+  <p class="info">Dashboard Owner — habit tracker, family progress, poin · <span class="badge">Fitur 1</span></p>
+</div>
+
+<div id="member" class="section">
+  <div class="phone-wrap" style="gap:16px; flex-direction:column; align-items:center;">
+    <p style="font-size:13px;color:#666;text-align:center;max-width:360px">Tampilan yang dilihat oleh anak-anak / anggota keluarga setelah scan QR dan login.</p>
+    <div style="background:#EEEDFE;border-radius:16px;padding:16px;width:360px">
+      <p style="font-size:12px;font-weight:500;color:#3C3489;margin-bottom:8px">Fitur Member View mencakup:</p>
+      <p style="font-size:12px;color:#534AB7;line-height:1.8">
+        ✅ Progress ring personal (% completion)<br>
+        ✅ Milestone bar 25% / 50% / 75% / 100%<br>
+        ✅ Daftar habit harian/mingguan/bulanan<br>
+        ✅ Koleksi badges yang bisa di-unlock<br>
+        ✅ Leaderboard keluarga (siapa rank #1)<br>
+        ✅ Motivasi pesan dari Ayah/Ibu<br>
+        ✅ Notifikasi real-time
+      </p>
+    </div>
+  </div>
+  <p class="info">Member View · <span class="badge">Fitur 2</span></p>
+</div>
+
+<div id="panel" class="section">
+  <div class="phone-wrap" style="flex-direction:column;align-items:center;gap:16px;">
+    <div style="background:#EEEDFE;border-radius:16px;padding:16px;width:360px">
+      <p style="font-size:12px;font-weight:500;color:#3C3489;margin-bottom:8px">Owner Control Panel mencakup:</p>
+      <p style="font-size:12px;color:#534AB7;line-height:1.8">
+        ✅ Dashboard ringkasan (total poin, avg compliance)<br>
+        ✅ Manage Habits — toggle on/off, add/edit habit<br>
+        ✅ Manage Rewards — set daftar hadiah & poin<br>
+        ✅ Milestone bonus rewards (25/50/75/100%)<br>
+        ✅ Approve / reject redeem request anggota<br>
+        ✅ Kirim pesan motivasi ke anggota<br>
+        ✅ Settings notifikasi & subscription plan
+      </p>
+    </div>
+  </div>
+  <p class="info">Owner Control Panel · <span class="badge">Fitur 3</span></p>
+</div>
+
+<div id="members" class="section">
+  <div class="phone-wrap" style="flex-direction:column;align-items:center;gap:16px;">
+    <div style="background:#E1F5EE;border-radius:16px;padding:16px;width:360px">
+      <p style="font-size:12px;font-weight:500;color:#085041;margin-bottom:8px">Manage Members mencakup:</p>
+      <p style="font-size:12px;color:#0F6E56;line-height:1.8">
+        ✅ Lihat semua anggota + status aktif/pending<br>
+        ✅ Tombol Remove per anggota (dengan konfirmasi)<br>
+        ✅ Generate QR Code untuk undang anggota baru<br>
+        ✅ Share via WhatsApp atau copy link<br>
+        ✅ Cancel undangan yang pending<br>
+        ✅ Info plan Free vs Premium
+      </p>
+    </div>
+  </div>
+  <p class="info">Manage Members (Add/Remove) · <span class="badge">Fitur 3+</span></p>
+</div>
+
+<div id="premium" class="section">
+  <div class="phone-wrap" style="flex-direction:column;align-items:center;gap:16px;">
+    <div style="background:#FAEEDA;border-radius:16px;padding:16px;width:360px">
+      <p style="font-size:12px;font-weight:500;color:#633806;margin-bottom:8px">Halaman Premium mencakup:</p>
+      <p style="font-size:12px;color:#854F0B;line-height:1.8">
+        ✅ 3 pilihan paket: Bulanan / 6 Bulan / Tahunan<br>
+        ✅ Harga: Rp 50.000 / Rp 45.000 / Rp 40.000 per bulan<br>
+        ✅ QRIS — scan dari semua bank & e-wallet<br>
+        ✅ a.n. Vemilia — terintegrasi langsung<br>
+        ✅ Admin panel: set harga bisa diubah sendiri<br>
+        ✅ Tagline keluarga yang hangat<br>
+        ✅ Konfirmasi via WhatsApp setelah bayar
+      </p>
+    </div>
+  </div>
+  <p class="info">Premium + QRIS + Admin Set Harga · <span class="badge">Fitur Premium</span></p>
+</div>
+
+<div id="milestone" class="section">
+  <div class="phone-wrap" style="flex-direction:column;align-items:center;gap:16px;">
+    <div style="background:#EEEDFE;border-radius:16px;padding:16px;width:360px">
+      <p style="font-size:12px;font-weight:500;color:#3C3489;margin-bottom:8px">6 jenis animasi milestone pop-up:</p>
+      <p style="font-size:12px;color:#534AB7;line-height:1.8">
+        🌱 25% — "Awal yang baik!" (+50 poin bonus)<br>
+        ⚡ 50% — "Setengah jalan!" (+100 poin bonus)<br>
+        🔥 75% — "Almost there!" (+150 poin bonus)<br>
+        👑 100% — "PERFECT MONTH!" (+500 poin)<br>
+        🏆 Family 100% — Semua anggota capai 100%!<br>
+        🎁 Reward approved — Owner setujui redeem
+      </p>
+    </div>
+    <p style="font-size:12px;color:#666;text-align:center;max-width:360px">Animasi konfeti, bounce effect, dan slide-up muncul otomatis saat milestone tercapai.</p>
+  </div>
+  <p class="info">Milestone Celebration Animations · <span class="badge">Fitur 4</span></p>
+</div>
+
+<div id="report" class="section">
+  <div class="phone-wrap" style="flex-direction:column;align-items:center;gap:16px;">
+    <div style="background:#E1F5EE;border-radius:16px;padding:16px;width:360px">
+      <p style="font-size:12px;font-weight:500;color:#085041;margin-bottom:8px">Monthly Report mencakup:</p>
+      <p style="font-size:12px;color:#0F6E56;line-height:1.8">
+        ✅ Overall compliance % + vs bulan lalu<br>
+        ✅ Stats: habit aktif, hari tracked, total poin<br>
+        ✅ Progress bar per anggota + streak terpanjang<br>
+        ✅ Grafik garis kepatuhan mingguan (Chart.js)<br>
+        ✅ Habit paling sering ditinggalkan vs terkuat<br>
+        ✅ Milestone yang tercapai bulan ini<br>
+        ✅ Ganti bulan (April/Maret/Februari)<br>
+        ✅ Export PDF · Share WA · Kirim Email
+      </p>
+    </div>
+  </div>
+  <p class="info">Monthly Progress Report · <span class="badge">Fitur 5</span></p>
+</div>
+
+<div id="ai" class="section">
+  <div class="phone-wrap" style="flex-direction:column;align-items:center;gap:16px;">
+    <div style="background:#EEEDFE;border-radius:16px;padding:16px;width:360px">
+      <p style="font-size:12px;font-weight:500;color:#3C3489;margin-bottom:8px">AI Insights + Owner Editor:</p>
+      <p style="font-size:12px;color:#534AB7;line-height:1.8">
+        ✅ Data keluarga dikirim ke Claude API<br>
+        ✅ AI tulis 3 insight: Bagus / Perlu perhatian / Target<br>
+        ✅ Efek typing streaming saat AI menulis<br>
+        ✅ Owner bisa edit tiap insight (badge berubah)<br>
+        ✅ Badge: "✦ AI" → "✎ Edited by owner"<br>
+        ✅ Regenerate → AI tulis versi berbeda<br>
+        ✅ Kolom pesan pribadi Ayah/Ibu (non-AI)<br>
+        ✅ Kirim ke keluarga / Export PDF / Share WA
+      </p>
+    </div>
+    <div style="background:#fff;border-radius:12px;border:0.5px solid rgba(0,0,0,0.1);padding:12px;width:360px">
+      <p style="font-size:11px;font-weight:500;color:#333;margin-bottom:6px">Contoh prompt ke Claude API:</p>
+      <p style="font-size:11px;color:#666;line-height:1.6;font-family:monospace;background:#f5f5f0;padding:8px;border-radius:8px">
+        "Kamu adalah konsultan habit keluarga yang hangat. Tulis insight dalam Bahasa Indonesia campur Inggris. Data: Kepatuhan 79%, Ibu 92%, Afkar 74%, Zahra 65%, habit terlemah: tidur 45%..."
+      </p>
+    </div>
+  </div>
+  <p class="info">AI Insights (Claude API) + Owner Edit · <span class="badge">Fitur 5+</span></p>
+</div>
+
+<div style="text-align:center;margin-top:32px;padding:20px;background:#fff;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08)">
+  <p style="font-size:16px;font-weight:500;color:#7F77DD;margin-bottom:8px">HABITKELUARGA B30 — Complete Prototype</p>
+  <p style="font-size:12px;color:#888;line-height:1.6">
+    Dibuat dengan Claude AI · April 2025<br>
+    Tech Stack: React Native · Expo · Supabase · Claude API<br>
+    "Buah hati menjadi apa yang kita harapkan adalah kebahagiaan yang tidak terkira rasanya."
+  </p>
+  <div style="margin-top:12px">
+    <span style="display:inline-block;background:#EEEDFE;color:#3C3489;padding:3px 10px;border-radius:20px;font-size:11px;margin:2px">9 Fitur Utama</span>
+    <span style="display:inline-block;background:#E1F5EE;color:#085041;padding:3px 10px;border-radius:20px;font-size:11px;margin:2px">Free + Premium Plan</span>
+    <span style="display:inline-block;background:#FAEEDA;color:#633806;padding:3px 10px;border-radius:20px;font-size:11px;margin:2px">QRIS Payment</span>
+    <span style="display:inline-block;background:#FAECE7;color:#4A1B0C;padding:3px 10px;border-radius:20px;font-size:11px;margin:2px">AI-Powered Insights</span>
+  </div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
