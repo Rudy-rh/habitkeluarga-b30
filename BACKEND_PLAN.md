@@ -313,42 +313,6 @@ async function generateFamilyInsights(familyData) {
 
 ---
 
-## Estimasi Biaya & Waktu
-
-### Fase 1 — MVP
-
-| Item | Estimasi Biaya |
-|------|---------------|
-| Developer (2–3 bulan) | Rp 12.000.000 – 18.000.000 |
-| Supabase (gratis di awal) | Rp 0 |
-| Expo (gratis) | Rp 0 |
-| Midtrans/Xendit setup | Rp 0 (bayar per transaksi 0.7%) |
-| Resend email (3000/bln gratis) | Rp 0 |
-| Google Play Store (sekali) | ~Rp 400.000 |
-| **Total estimasi MVP** | **Rp 12–18 juta** |
-
-### Fase 2 — Fitur Lanjutan
-
-| Item | Estimasi Biaya |
-|------|---------------|
-| Developer (1–2 bulan tambahan) | Rp 6.000.000 – 12.000.000 |
-| Claude API (per 1000 insight ~Rp 2.000) | Tergantung users |
-| Supabase Pro (jika >500MB) | ~Rp 375.000/bln |
-| **Total estimasi Fase 2** | **Rp 6–12 juta** |
-
----
-
-## Timeline Pengembangan
-
-```
-Bulan 1–2   : Build MVP (backend + sambungkan ke prototype)
-Bulan 3     : Testing internal dengan keluarga sendiri
-Bulan 4     : Launch ke Google Play Store (soft launch)
-Bulan 5–6   : Tambah fitur Fase 2 berdasarkan feedback
-Bulan 7+    : Scale up, marketing, tambah pengguna
-```
-
----
 
 ## Catatan Penting untuk Developer
 
