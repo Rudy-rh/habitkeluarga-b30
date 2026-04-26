@@ -1,14 +1,14 @@
 # HABITKELUARGA B30 — Backend Plan
-## Panduan Backend untuk Developer | Versi 2.0
+## Panduan Backend untuk Developer | Versi 2.1
 
 ---
 
 ## Pendekatan: MVP dulu, fitur lanjutan bertahap
 
-Berdasarkan diskusi dengan owner, pengembangan backend dibagi menjadi 2 fase:
+Pengembangan backend dibagi menjadi 2 fase:
 
 - **Fase 1 (MVP)** — fitur inti yang cukup untuk dipakai keluarga nyata
-- **Fase 2** — fitur lanjutan ditambah setelah MVP launch dan ada feedback
+- **Fase 2** — fitur lanjutan ditambah setelah MVP launch dan ada feedback pengguna
 
 ---
 
@@ -24,9 +24,9 @@ Berdasarkan diskusi dengan owner, pengembangan backend dibagi menjadi 2 fase:
 | Sistem poin & reward dasar | Supabase DB | Hitung poin, request redeem |
 | QR code undang anggota | Supabase + UUID | Generate & validasi QR |
 | Dashboard progress | Supabase DB | Query kepatuhan & poin |
-| Notifikasi push dasar | Expo Push Notifications | Reminder & pencapaian |
+| Notifikasi push dasar | Expo Push Notifications | Reminder & pencapaian reward |
 | Pembayaran premium via QRIS | Midtrans/Xendit | Deteksi otomatis + webhook |
-| Email aktivasi | Resend.com | Invoice + kode aktivasi |
+| Email aktivasi | Resend.com | Invoice + kode aktivasi otomatis |
 
 ---
 
@@ -66,7 +66,7 @@ Berdasarkan diskusi dengan owner, pengembangan backend dibagi menjadi 2 fase:
 id              UUID PRIMARY KEY
 owner_id        UUID REFERENCES users(id)
 family_name     TEXT
-plan            TEXT DEFAULT 'free' -- 'free' atau 'premium'
+plan            TEXT DEFAULT 'free'  -- 'free' atau 'premium'
 plan_expires_at TIMESTAMP
 qr_code         TEXT UNIQUE
 created_at      TIMESTAMP DEFAULT now()
@@ -74,13 +74,13 @@ created_at      TIMESTAMP DEFAULT now()
 
 #### 2. `users` — Data pengguna
 ```sql
-id              UUID PRIMARY KEY (dari Supabase Auth)
+id              UUID PRIMARY KEY  -- dari Supabase Auth
 family_id       UUID REFERENCES families(id)
 name            TEXT
-role            TEXT -- 'owner' atau 'member'
-age_category    TEXT -- 'dasar', 'menengah', 'atas'
+role            TEXT              -- 'owner' atau 'member'
+age_category    TEXT              -- 'dasar', 'menengah', 'atas'
 avatar_url      TEXT
-push_token      TEXT -- untuk notifikasi
+push_token      TEXT              -- untuk notifikasi
 created_at      TIMESTAMP DEFAULT now()
 ```
 
@@ -89,8 +89,8 @@ created_at      TIMESTAMP DEFAULT now()
 id              UUID PRIMARY KEY
 family_id       UUID REFERENCES families(id)
 name            TEXT
-description     TEXT -- keterangan singkat
-frequency       TEXT -- 'daily', 'weekly', 'monthly'
+description     TEXT              -- keterangan singkat
+frequency       TEXT              -- 'daily', 'weekly', 'monthly'
 points          INTEGER DEFAULT 10
 is_active       BOOLEAN DEFAULT true
 sort_order      INTEGER DEFAULT 0 -- untuk custom ordering
@@ -103,26 +103,26 @@ id              UUID PRIMARY KEY
 habit_id        UUID REFERENCES habits(id)
 user_id         UUID REFERENCES users(id)
 completed_at    TIMESTAMP DEFAULT now()
-log_date        DATE -- tanggal (untuk cek duplikat harian)
+log_date        DATE              -- untuk cek duplikat harian
 ```
 
 #### 5. `rewards` — Daftar hadiah
 ```sql
 id              UUID PRIMARY KEY
 family_id       UUID REFERENCES families(id)
-type            TEXT -- 'point' atau 'habit'
-subtype         TEXT -- 'individual' atau 'kolektif'
+type            TEXT              -- 'point' atau 'habit'
+subtype         TEXT              -- 'individual' atau 'kolektif'
 name            TEXT
 emoji           TEXT
-age_category    TEXT -- 'dasar', 'menengah', 'atas', 'all'
-points_required INTEGER -- untuk reward point
-compliance_pct  INTEGER DEFAULT 100 -- untuk reward habit
-duration_months INTEGER DEFAULT 1 -- durasi kepatuhan
+age_category    TEXT              -- 'dasar', 'menengah', 'atas', 'all'
+points_required INTEGER           -- untuk reward point
+compliance_pct  INTEGER DEFAULT 100
+duration_months INTEGER DEFAULT 1 -- durasi kepatuhan (bulan)
 is_active       BOOLEAN DEFAULT true
 created_at      TIMESTAMP DEFAULT now()
 ```
 
-#### 6. `redemptions` — Catatan redeem
+#### 6. `redemptions` — Catatan redeem hadiah
 ```sql
 id              UUID PRIMARY KEY
 reward_id       UUID REFERENCES rewards(id)
@@ -137,9 +137,9 @@ notes           TEXT
 ```sql
 id              UUID PRIMARY KEY
 family_id       UUID REFERENCES families(id)
-plan_type       TEXT -- 'monthly','6months','yearly'
-amount          INTEGER -- dalam rupiah
-payment_id      TEXT -- ID dari Midtrans/Xendit
+plan_type       TEXT              -- 'monthly','6months','yearly'
+amount          INTEGER           -- dalam rupiah
+payment_id      TEXT              -- ID dari Midtrans/Xendit
 status          TEXT DEFAULT 'pending'
 activation_code TEXT UNIQUE
 activated_at    TIMESTAMP
@@ -152,7 +152,7 @@ created_at      TIMESTAMP DEFAULT now()
 ### Alur Pembayaran Premium (Fully Otomatis)
 
 ```
-1. User pilih paket & isi data daftar
+1. User pilih paket & isi data pendaftaran
         ↓
 2. App request ke Supabase Edge Function
         ↓
@@ -160,19 +160,19 @@ created_at      TIMESTAMP DEFAULT now()
         ↓
 4. QRIS ditampilkan ke user
         ↓
-5. User bayar via bank/e-wallet
+5. User bayar via bank/e-wallet manapun
         ↓
 6. Midtrans/Xendit kirim webhook ke Edge Function
         ↓
-7. Edge Function:
+7. Edge Function otomatis:
    - Update status pembayaran → 'paid'
-   - Generate kode aktivasi unik (misal: HKB-7429)
+   - Generate kode aktivasi unik (contoh: HKB-7429)
    - Update plan keluarga → 'premium'
    - Kirim email via Resend (invoice + kode aktivasi)
         ↓
 8. User terima email, masukkan kode aktivasi di app
         ↓
-9. App aktif sebagai Premium!
+9. Akun Premium langsung aktif!
 ```
 
 ---
@@ -187,14 +187,14 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js'
 
 serve(async (req) => {
   const payload = await req.json()
-  
+
   // Verifikasi signature dari Midtrans
   const isValid = verifyMidtransSignature(payload)
   if (!isValid) return new Response('Unauthorized', { status: 401 })
 
   if (payload.transaction_status === 'settlement') {
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY)
-    
+
     // 1. Update status pembayaran
     await supabase
       .from('subscriptions')
@@ -211,7 +211,7 @@ serve(async (req) => {
     // 3. Update plan keluarga jadi premium
     await supabase
       .from('families')
-      .update({ 
+      .update({
         plan: 'premium',
         plan_expires_at: calculateExpiry(sub.plan_type)
       })
@@ -261,14 +261,14 @@ async function sendActivationEmail({ to, activationCode, planType, amount }) {
 
 Ditambahkan berdasarkan feedback pengguna nyata:
 
-| Fitur | Teknologi | Estimasi |
-|-------|-----------|----------|
-| AI Insights laporan bulanan | Claude API (Anthropic) | +2 minggu |
-| Reward kategori usia advanced | Supabase DB update | +1 minggu |
-| Monthly report PDF | Puppeteer / wkhtmltopdf | +2 minggu |
-| Milestone celebration system | Supabase DB + Push Notif | +1 minggu |
-| Reward kolektif & individual tracking | Supabase DB update | +2 minggu |
-| Share laporan via WA/Email | WhatsApp API + Resend | +1 minggu |
+| Fitur | Teknologi |
+|-------|-----------|
+| AI Insights laporan bulanan | Claude API (Anthropic) |
+| Reward kategori usia advanced | Supabase DB update |
+| Monthly report PDF | Puppeteer / wkhtmltopdf |
+| Milestone celebration system | Supabase DB + Push Notif |
+| Reward kolektif & individual tracking | Supabase DB update |
+| Share laporan via WA/Email | WhatsApp API + Resend |
 
 ### Contoh Integrasi Claude AI untuk Insights
 
@@ -280,7 +280,7 @@ async function generateFamilyInsights(familyData) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': process.env.CLAUDE_API_KEY,
+      'x-api-key': process.env.CLAUDE_API_KEY, // simpan di .env, jangan hardcode!
       'anthropic-version': '2023-06-01'
     },
     body: JSON.stringify({
@@ -290,22 +290,22 @@ async function generateFamilyInsights(familyData) {
         role: 'user',
         content: `Kamu adalah konsultan habit keluarga yang hangat dan supportif.
         Tulis insight dalam Bahasa Indonesia campur sedikit Inggris.
-        
+
         Data keluarga bulan ${familyData.month}:
         - Kepatuhan keluarga: ${familyData.familyPct}%
         - Anggota terbaik: ${familyData.topMember} (${familyData.topPct}%)
         - Habit terkuat: ${familyData.bestHabit}
         - Habit terlemah: ${familyData.worstHabit}
         - Perubahan vs bulan lalu: ${familyData.improvement}%
-        
+
         Tulis 3 paragraf singkat:
-        1. Yang berjalan baik (apresiasi spesifik, sebut nama)
+        1. Yang berjalan baik (apresiasi spesifik, sebut nama anggota)
         2. Yang perlu perhatian (konstruktif, tidak menyalahkan)
         3. Target bulan depan (konkret dan achievable)`
       }]
     })
   })
-  
+
   const data = await response.json()
   return data.content[0].text
 }
@@ -313,16 +313,26 @@ async function generateFamilyInsights(familyData) {
 
 ---
 
-
 ## Catatan Penting untuk Developer
 
 1. **Gunakan Supabase Row Level Security (RLS)** — pastikan data satu keluarga tidak bisa diakses keluarga lain
-2. **API key Claude jangan di frontend** — selalu panggil via Supabase Edge Function
-3. **Test webhook Midtrans** di staging dulu sebelum production
-4. **Backup database** minimal seminggu sekali via Supabase dashboard
-5. **Versi gratis Supabase** cukup untuk ratusan keluarga di awal
+2. **API key Claude jangan di frontend** — selalu panggil via Supabase Edge Function agar aman
+3. **Test webhook Midtrans** di environment staging dulu sebelum production
+4. **Backup database** secara rutin via Supabase dashboard
+5. **Versi gratis Supabase** sudah mencukupi untuk ratusan keluarga di tahap awal
+6. **Jangan upload file `.env`** ke GitHub — simpan API key di environment variables
+
+---
+
+## Referensi Dokumentasi
+
+- Supabase: https://supabase.com/docs
+- Expo Push Notifications: https://docs.expo.dev/push-notifications/overview
+- Midtrans: https://docs.midtrans.com
+- Resend: https://resend.com/docs
+- Claude API: https://docs.anthropic.com
 
 ---
 
 *Dokumen ini bagian dari HABITKELUARGA B30 Project — Jalan Ninja Keluargaku*
-*Versi 2.0 | April 2025*
+*Versi 2.1 | April 2025*
